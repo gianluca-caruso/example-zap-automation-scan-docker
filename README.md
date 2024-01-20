@@ -1,4 +1,4 @@
-# OWASP ZAP Automation Framework Example
+# Example OWASP ZAP Automation Framework with docker
 
 ## Introduction
 This is a simple example of how to use the OWASP ZAP Automation Framework with docker to automate the execution of a scan plan.
