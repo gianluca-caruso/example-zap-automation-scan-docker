@@ -1,0 +1,63 @@
+env:
+  vars:
+    accessToken: test
+    refreshToken: test
+  contexts:
+    - name: ctx-PullProof
+      urls:
+        - https://example.com
+      authentication:
+        method: script
+        parameters:
+          script: /zap/wrk/scripts/auth.js
+          scriptEngine: Oracle Nashorn
+          loginPageUrl: https://example.com/login
+          loginRequestUrl: https://example.com/login
+          loginUrl: https://example.com/auth/login
+      sessionManagement:
+        method: script
+        parameters:
+          script: /zap/wrk/scripts/session.js
+          scriptEngine: Oracle Nashorn
+      users:
+        - name: user-PullProof
+          credentials:
+            username: example@gmail.com
+            password: pass
+  
+  parameters:
+    failOnError: true
+    failOnWarning: false
+    progressToStdout: true
+jobs:
+  - type: requestor
+    parameters:
+      user: user-PullProof
+    requests:
+      - name: req-PullProof
+        url: https://example.com
+        method: GET
+
+  - type: spider
+    parameters:
+      user: user-PullProof
+      url: https://example.com
+
+  - type: activeScan
+    parameters:
+      policy: ATTACK
+      user: user-PullProof
+      url: https://example.com
+      threadPerHost: 20
+      maxScanDurationInMins: 1
+  - type: report
+    parameters:
+      template: traditional-json-plus
+      displayReport: true
+      reportDir: /zap/wrk/reports
+      reportTitle: "ZAP Report"
+      reportDescription: "ZAP Report"
+    
+
+    
+    
